@@ -1,0 +1,54 @@
+***Callback***:-
+*you can pass the callback function as an argument to another function is known an callback function.
+*execution:-The function receiving the callback will execute the callback at some point during it's executions(often at the end or after an asynchronous operation is done)
+*Example1:- function mainFunction(callback){
+      console.log("Executing main function")
+      callback()//here we call the callback function
+      }
+      function callbackFunction(){
+      console.log("callbackfunction executed")
+      }
+      mainFunction(callbackFunction)
+*OUTPUT:-Executing main function
+         callbackfunction executed
+
+*explanation of above program:-mainfunction takes a callback as parameter callbackFunction is passed to mainfunction.
+                               inside the mainFunction,the callfunction function is called with callback().
+
+*Example2:-
+*INPUT:-function greet(name,callback){
+            console.log("hello"+name);
+            callback();
+        }
+        function goodbye(){
+            console.log("Goodbye!")
+        }
+        greet("hema",goodbye)
+*OUTPUT:-hellohema
+	 Goodbye!
+
+*Example3:-
+*INPUT:-using an anonymous functions as callback;
+	function greet(name,callback){
+	callback();
+	//it will execute callback function after greeting
+	}
+	greet("Ganesh,function(){
+	console.log("a python Developer");
+	})
+*OUTPUT:- a Python Developer.
+*Explanation of above program:- we didn't pass a named function like goodbye; Instead of that we define an anonymous function directly.
+
+*Example4:-
+Asynchronous callback with setTimeout;
+Code:
+function fetchData(callback){
+console.log("Fetching data...")
+}setTimeout(function(){
+console.log("Data fetched....");
+callback() //executes a callback after a delay
+}2000);
+function processData(){
+console.log("processing the fetched data....")
+}
+fetchData(processData);
