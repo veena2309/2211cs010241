@@ -1,0 +1,65 @@
+DOM – Document Object Model
+•	It is a programming interface in web development that allows us to interact and manipulate (change) the  html documents
+•	When the web page is loaded , the browser creates the document object model of web page
+•	When an html file is loaded into the browser , the JavaScript  cannot understand the html document directly
+•	DOM : is basically the representation of same html document but in the form of tree-like structure composed of objects.
+•	HTML DOM it allows JavaScript to access (to get) and modify all the elements in the html document
+
+KEYPOINTS:
+1.STRUCTURE : The DOM represents the structure of html document as tree; Each node in a tree represents the elements, an attribute, text
+2. MANIPULATION :  using js , you can interact with elements(buttons, h, p), we can modify, add, remove elements change styles;
+3.EVENT HANDLING : 
+4. W3C – World Wide Web Consortium
+EX:-
+<html>
+<head>
+<title>college</title>
+</head>
+<body>
+<h1> Harshitha </h1>
+</body>
+</html>
+•In DOM all html elements are defined objects
+•Property : is a value that you can set to objects(changing content of html document)
+•Method: an action (add or del)
+
+METHODS  of DOCUMENT OBJECT
+GETTING ELEMENT
+
+1. Getting an element by id
+	2. Getting an element by class
+	3. Getting an element by tag name
+	4. Getting an element by query selectors
+
+
+2. Getting an element by class :
+Returns all elements with similar class name 
+Returns in the form of html collection object
+<style>
+        .a{
+            color: blue;
+        }
+        .b{
+            color: darkgreen;
+        }
+        .c{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="a"> Harshitha</h1>
+    <h1 class="b"> Manvitha</h1>
+    <h1 class="c"> veena</h1>
+    <h1 class="c"> Hema</h1>
+    <h1 class="a"> dhanush</h1>
+    <h1 class="b"> sidharth</h1>
+    <h1 class="a"> akhil</h1>
+OUTPUT :
+Harshitha - blue
+Manvitha - darkgreen
+Veena-red
+Hema-red
+Dhanush- blue
+Sidharth- darkgreen
+Akhil- blue
