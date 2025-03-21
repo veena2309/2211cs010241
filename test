@@ -1,0 +1,51 @@
+mysql> use Test;
+Database changed
+mysql> create table Student(
+    -> rollno varchar(55),
+    -> name string,
+    -> branch string,
+    -> emailId varchar(85),
+    -> mobileno int primary key);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'string,
+branch string,
+emailId varchar(85),
+mobileno int primary key)' at line 3
+mysql> create table student(
+    -> student_id int primary key,
+    -> name varchar(65),
+    -> email varchar(45),
+    -> branch varchar(30),
+    -> mobile int);
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> insert into Student values(241,"veena","sreeveena0905@gmail.com","cse",7601060638),
+    -> (137,"charan","charankumar@gmail.com","it",9550440459),
+    -> (212,"harshitha","harshithaguntupally@gmail.com","iot",8328570427),
+    -> (201,"hemalatha","hemalathagummadilli@gmail.com","aiml",9705280007),
+    -> (245,"lokesh","lokeshreddy@gmail.com","ds",9998887766),
+    -> (181,"lucky","luckyrampasham@gmail.com","cse",6303093071),
+    -> (164,"pradeep","pradeepreddy@gmail.com","iot",9701695377);
+ERROR 1264 (22003): Out of range value for column 'mobile' at row 1
+mysql> insert into Student values(241,"veena","sreeveena0905@gmail.com","cse",76010606),
+    -> (137,"charan","charankumar@gmail.com","it",95504404),
+    -> (212,"harshitha","harshithaguntupally@gmail.com","iot",83285704),
+    -> (201,"hemalatha","hemalathagummadilli@gmail.com","aiml",97052800),
+    -> (245,"lokesh","lokeshreddy@gmail.com","ds",99988877),
+    -> (181,"lucky","luckyrampasham@gmail.com","cse",63030930),
+    -> (164,"pradeep","pradeepreddy@gmail.com","iot",97016953);
+Query OK, 7 rows affected (0.01 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> select *from Student;
++------------+-----------+-------------------------------+--------+----------+
+| student_id | name      | email                         | branch | mobile   |
++------------+-----------+-------------------------------+--------+----------+
+|        137 | charan    | charankumar@gmail.com         | it     | 95504404 |
+|        164 | pradeep   | pradeepreddy@gmail.com        | iot    | 97016953 |
+|        181 | lucky     | luckyrampasham@gmail.com      | cse    | 63030930 |
+|        201 | hemalatha | hemalathagummadilli@gmail.com | aiml   | 97052800 |
+|        212 | harshitha | harshithaguntupally@gmail.com | iot    | 83285704 |
+|        241 | veena     | sreeveena0905@gmail.com       | cse    | 76010606 |
+|        245 | lokesh    | lokeshreddy@gmail.com         | ds     | 99988877 |
++------------+-----------+-------------------------------+--------+----------+
+7 rows in set (0.00 sec)
