@@ -1,0 +1,184 @@
+StudentController.java
+package com.example.controller;
+
+import com.example.model.Student;
+import com.example.service.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/students")
+public class StudentController {
+
+    @Autowired
+    private StudentService studentService;
+
+    @GetMapping
+    public List<Student> getAllStudents() {
+        return studentService.getAllStudents();
+    }
+
+    @GetMapping("/{rollno}")
+    public ResponseEntity<Student> getStudentById(@PathVariable int rollno) {
+        Optional<Student> student = studentService.getStudentById(rollno);
+        return student.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public Student createStudent(@RequestBody Student student) {
+        return studentService.saveStudent(student);
+    }
+
+    @PutMapping("/{rollno}")
+    public ResponseEntity<Student> updateStudent(@PathVariable int rollno, @RequestBody Student studentDetails) {
+        Student updatedStudent = studentService.updateStudent(rollno, studentDetails);
+        return updatedStudent != null ? ResponseEntity.ok(updatedStudent) : ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{rollno}")
+    public ResponseEntity<Void> deleteStudent(@PathVariable int rollno) {
+        return studentService.deleteStudent(rollno) ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+    }
+}
+
+Student.java
+package com.example.model;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Table(name = "student")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Student {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int rollno;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false, unique = true)
+    private String mail;
+
+    @Column(nullable = false)
+    private String mobile;
+
+    @Column(nullable = false)
+    private String branch;
+
+	public int getRollno() {
+		return rollno;
+	}
+
+	public void setRollno(int rollno) {
+		this.rollno = rollno;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public String getBranch() {
+		return branch;
+	}
+
+	public void setBranch(String branch) {
+		this.branch = branch;
+	}
+
+	public Student() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+    
+}
+
+StudentRepository.java
+package com.example.repo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import com.example.model.Student;
+
+@Repository
+public interface StudentRepository extends JpaRepository<Student, Integer> {
+}
+
+StudentService.java
+package com.example.service;
+
+import com.example.model.Student;
+import com.example.repo.StudentRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class StudentService {
+
+    private final StudentRepository studentRepository;
+
+    public StudentService(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
+
+    public List<Student> getAllStudents() {
+        return studentRepository.findAll();
+    }
+
+    public Optional<Student> getStudentById(Integer rollno) {
+        return studentRepository.findById(rollno);
+    }
+
+    public Student saveStudent(Student student) {
+        return studentRepository.save(student);
+    }
+
+    public Student updateStudent(Integer rollno, Student studentDetails) {
+        return studentRepository.findById(rollno).map(student -> {
+            student.setName(studentDetails.getName());
+            student.setMail(studentDetails.getMail());
+            student.setMobile(studentDetails.getMobile());
+            student.setBranch(studentDetails.getBranch());
+            return studentRepository.save(student);
+        }).orElseThrow(() -> new RuntimeException("Student not found with Roll No: " + rollno));
+    }
+
+    public boolean deleteStudent(Integer rollno) {
+        if (studentRepository.existsById(rollno)) {
+            studentRepository.deleteById(rollno);
+            return true;
+        }
+        return false;
+    }
+}
